@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 from ultrasonic_sensor import distance
 
-BuzzerPin = 7
+BuzzerPin = 4
 
 CL = [0, 131, 147, 165, 175, 196, 211, 248] # Low C Note Frequency
 CM = [0, 262, 294, 330, 350, 393, 441, 495] # Middle C Note Frequency
@@ -17,13 +17,13 @@ beat_1 = [ 1, .5, 2, 2, 2, 4, 1, .5,
 2, 4, 1, .5, 2, 2, 2, 2 ]
 
 def setup():
-  GPIO.setmode(GPIO.BOARD) # Numbers GPIOs by physical location
+  GPIO.setmode(GPIO.BCM) # Numbers GPIOs by physical location
   GPIO.setup(BuzzerPin, GPIO.OUT) # Set pins' mode is output
   global Buzz # Assign a global variable to replace GPIO.PWM
   Buzz = GPIO.PWM(BuzzerPin, 440) # 440 is initial frequency.
 
 def loop():
-  print '\n Playing Happy Birthday...'
+  print ('\n Playing Happy Birthday...')
   for i in range(0, len(song_1)): # Play Happy Birthday
     Buzz.start(50)
     Buzz.ChangeFrequency(song_1[i]) # Change the frequency along the song note
@@ -47,11 +47,11 @@ if __name__ == '__main__': # Program start from here
       if dist < 50:
         while time.time() - start_time < 1:
           Buzz.start(50)
-          time.pause(0.05)
+          time.sleep(0.05)
           Buzz.stop()
-          time.pause(dist/100)
+          time.sleep(dist/100)
       else:
-        time.pause(1)
+        time.sleep(1)
 
   except KeyboardInterrupt:
     destory()
