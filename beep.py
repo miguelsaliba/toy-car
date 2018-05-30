@@ -43,6 +43,15 @@ if __name__ == '__main__': # Program start from here
   try:
     while True:
       dist = distance()
-      
+      start_time = time.time()
+      if dist < 50:
+        while time.time() - start_time < 1:
+          Buzz.start(50)
+          time.pause(0.05)
+          Buzz.stop()
+          time.pause(dist/100)
+      else:
+        time.pause(1)
+
   except KeyboardInterrupt:
     destory()
